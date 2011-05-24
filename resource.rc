@@ -1,0 +1,307 @@
+/****************************************************************************
+** QClip
+** Copyright 2006 Aaron Curtis
+**
+** QClip is a clipboard extender for Windows.  It monitors the standard
+** Windows clipboard and pushes any data placed there into a queue.
+** Users can then pop data from either end of the queue when needed  or
+** select items arbitrarily from a menu.  In either case, the program
+** performs a "paste" operation automatically.
+**
+** This program is free software; you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation; either version 2 of the License, or
+** (at your option) any later version.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this file; if not, write to the Free Software
+** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+****************************************************************************/
+
+#include <windows.h>
+#include <prsht.h>
+#include <commctrl.h>
+#include "resource.h"
+
+
+ICON_QCLIP      ICON "icon.ico"
+
+
+MENU_TRAY MENU
+BEGIN
+    POPUP ""
+    BEGIN
+        MENUITEM "&Open...",        IDM_OPEN
+        MENUITEM "&Save",           IDM_SAVE, GRAYED
+        MENUITEM "Save &As...",     IDM_SAVEAS
+        MENUITEM "&Recent Files",   IDM_RECENT, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "Empt&y Queue",    IDM_EMPTY
+        MENUITEM "Enable Clipboard &Monitoring", IDM_ENABLE
+        MENUITEM SEPARATOR
+        MENUITEM "&Preferences...", IDM_SETTINGS
+        MENUITEM "Online &Help...", IDM_HELP
+        MENUITEM "A&bout...",       IDM_ABOUT
+        MENUITEM SEPARATOR
+        MENUITEM "&Exit",           IDM_EXIT
+   END
+END
+
+
+DIALOG_ABOUT DIALOG 0, 0, 200, 154
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "About QClip"
+FONT 8, "Ms Sans Serif"
+BEGIN
+    ICON        ICON_QCLIP, (-1),
+                11,6,20,20
+
+	DEFPUSHBUTTON "&OK", IDOK,
+                144, 134, 50, 14
+
+    LTEXT       "QClip v0.9.3.1", IDC_ABOUT_TITLE,
+                48, 8, 60, 12,
+                SS_LEFT
+
+    LTEXT       "Queue based clipboard extender.\r\n" \
+                "Copyright © 2006 Aaron Curtis.", (-1),
+                48, 23, 146, 26,
+                SS_LEFT
+
+    LTEXT       "This program is free software; you can redistribute " \
+                "it and/or modify it under the terms of the GNU General " \
+                "Public License as published by the Free Software " \
+                "Foundation; either version 2 of the License, or (at " \
+                "your option) any later version.", (-1),
+                48, 48, 146, 50,
+                SS_LEFT
+
+    LTEXT       "email:", (-1),
+                48, 104, 30, 12,
+                SS_LEFT
+
+    LTEXT       "aaron@cadae.net", IDC_ABOUT_EMAIL,
+                80, 104, 60, 12,
+                SS_LEFT | SS_NOTIFY
+
+    LTEXT       "web:", (-1),
+                48, 118, 30, 12,
+                SS_LEFT
+
+    LTEXT       "www.cadae.net", IDC_ABOUT_WEB,
+                80, 118, 60, 12,
+                SS_LEFT | SS_NOTIFY
+END
+
+
+DIALOG_GENERAL_SETTINGS DIALOG 0, 0, PROP_SM_CXDLG, PROP_SM_CYDLG
+STYLE WS_CHILD | WS_CLIPSIBLINGS
+CAPTION "General"
+FONT 8, "Ms Sans Serif"
+BEGIN
+    LTEXT       "Queue Size", (-1),
+                10, 8, 50, 12 
+
+    EDITTEXT    IDC_SIZE_BOX,
+                60, 6, 30, 12,
+                ES_NUMBER
+
+    CONTROL     "", IDC_SIZE_UPDOWN, UPDOWN_CLASS,
+                UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_AUTOBUDDY |
+                UDS_SETBUDDYINT | WS_TABSTOP,
+                0, 0, 0, 0
+
+    CONTROL     "Unlimited queue",
+                IDCB_DYNAMIC_QUEUE, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                10, 23, 180, 12
+
+    CONTROL     "Auto-save and restore the queue between sessions",
+                IDCB_LOAD_PREVIOUS, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                10, 38, 180, 12
+
+    CONTROL     "Preview bitmaps in the popup menu",
+                IDCB_PREVIEW_BITMAPS, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                10, 53, 180, 12
+
+    GROUPBOX    "Common Items", (-1),
+                10, 68, 190, 102
+
+    CONTROL     "Date (Long Format)",
+                IDCB_LONG_DATE, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 80, 150, 12
+
+    CONTROL     "Date (Short Format)",
+                IDCB_SHORT_DATE, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 92, 150, 12
+
+    CONTROL     "Date / Time (Custom)",
+                IDCB_CUSTOM_DATE, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 104, 150, 12
+
+    EDITTEXT    IDC_DATE_FORMAT,
+                18, 118, 116, 12,
+                ES_AUTOHSCROLL
+
+    LTEXT       "Custom Items", (-1),
+                18, 134, 150, 12
+
+    EDITTEXT    IDC_COMMON_FILE,
+                18, 146, 116, 12,
+                ES_AUTOHSCROLL
+
+    PUSHBUTTON  "Browse...", IDC_COMMON_BROWSE,
+                140, 145, 50, 14
+END
+
+DIALOG_KEY_SETTINGS DIALOG 0, 0, PROP_SM_CXDLG, PROP_SM_CYDLG
+STYLE WS_CHILD | WS_CLIPSIBLINGS
+CAPTION "Keys"
+FONT 8, "Ms Sans Serif"
+BEGIN
+    LTEXT       "Commands", (-1),
+                10, 8, 50, 12
+
+    //CONTROL     "", IDC_COMMAND_LIST, WC_LISTVIEW,
+    //            WS_TABSTOP | LVS_SINGLESEL | LVS_REPORT |
+    //                WS_CHILD | WS_BORDER | LVS_SORTASCENDING,
+    //            10, 20, 190, 120
+
+    LISTBOX     IDC_COMMAND_LIST,
+                10, 20, 190, 130,
+                LBS_NOTIFY | LBS_SORT | WS_VSCROLL | WS_TABSTOP
+
+    LTEXT       "Shortcut Key", (-1),
+                10, 150, 50, 12
+
+    CONTROL     "", IDC_HOTKEY, HOTKEY_CLASS,
+                WS_TABSTOP,
+                10, 162, 130, 12
+
+    PUSHBUTTON  "Clear", IDC_CLEARKEY,
+                150, 161, 50, 14
+END
+
+DIALOG_FORMAT_SETTINGS DIALOG 0, 0, PROP_SM_CXDLG, PROP_SM_CYDLG
+STYLE WS_CHILD | WS_CLIPSIBLINGS
+CAPTION "Formats"
+FONT 8, "Ms Sans Serif"
+BEGIN
+    CONTROL     "Enable All Formats", IDCB_ALL_FORMATS, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                10, 8, 100, 12
+
+    GROUPBOX    "Individual Formats", (-1),
+                10, 23, 190, 140
+
+    CONTROL     "Text", IDCB_TEXT, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 35, 120, 12
+
+    CONTROL     "Bitmap / TIFF", IDCB_BITMAP, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 50, 120, 12
+
+    CONTROL     "Files", IDCB_FILES, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 65, 120, 12
+
+    CONTROL     "Metafile", IDCB_META, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 80, 120, 12
+
+    CONTROL     "Wave / RIFF", IDCB_WAVE, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 95, 120, 12
+
+    CONTROL     "Other Standard Formats", IDCB_OTHER, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 110, 120, 12
+
+    CONTROL     "Private Formats", IDCB_PRIVATE, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 125, 120, 12
+
+    CONTROL     "Registered Application Formats", IDCB_REGISTERED, "BUTTON",
+                BS_AUTOCHECKBOX | WS_TABSTOP,
+                18, 140, 120, 12
+END
+
+STRINGTABLE
+BEGIN
+    STRING_SETTINGS_TITLE       "QClip Preferences"
+    STRING_DEFAULT_POPUP        "[Binary Data]"
+    STRING_INDEX_CHARS          "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    STRING_BITMAP_POPUP         "[Bitmap - %dx%dx%d]"
+    STRING_FILE_POPUP           "[Files (%d)]"
+    STRING_TRAY_TIP             "QClip v0.9.3.1"
+	STRING_TYPE_FILTER			"QClip Clipboards (.qcl);*.qcl;"
+    STRING_README               "http://www.cadae.net/qclip-docs.html"
+    STRING_EMAIL                "mailto:aaron@cadae.net"
+    STRING_WEB                  "http://www.cadae.net/"
+
+    STRING_POPUP                "Show Popup Menu"
+    STRING_POP_FRONT            "Pop Newest"
+    STRING_PEEK_FRONT           "Peek 1st Newest"
+    STRING_POP_BACK             "Pop Oldest"
+    STRING_PEEK_BACK            "Peek Oldest"
+    STRING_EMPTY                "Empty Queue"
+    STRING_OPEN                 "Open Queue"
+    STRING_SAVEAS               "Save Queue As"
+    STRING_SAVE                 "Save Queue"
+    STRING_PASTE_LONG_DATE      "Paste Date (Long Format)"
+    STRING_PASTE_SHORT_DATE     "Paste Date (Short Format)"
+    STRING_PASTE_CUSTOM_DATE    "Paste Date (Custom Format)"
+    STRING_TOGGLE               "Toggle Clipboard Monitoring"
+    STRING_DISCARD_FRONT        "Discard Newest"
+    STRING_DISCARD_BACK         "Discard Oldest"
+
+    STRING_PEEK_2               "Peek 2nd Newest"
+    STRING_PEEK_3               "Peek 3rd Newest"
+    STRING_PEEK_4               "Peek 4th Newest"
+    STRING_PEEK_5               "Peek 5th Newest"
+
+    STRING_COMMON_1             "Paste Custom Item #1"
+    STRING_COMMON_2             "Paste Custom Item #2"
+    STRING_COMMON_3             "Paste Custom Item #3"
+    STRING_COMMON_4             "Paste Custom Item #4"
+    STRING_COMMON_5             "Paste Custom Item #5"
+
+    STRING_ERROR_OPEN_FILE      "Failed to open the file.  Possible reasons are insufficient memory or a missing or corrupt file."
+END
+
+
+VS_VERSION_INFO VERSIONINFO
+    FILEVERSION             0,9,3,1
+    PRODUCTVERSION          0,9,3,1
+    FILEOS                  VOS__WINDOWS32
+    FILETYPE                VFT_APP
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904E4"
+        BEGIN
+            VALUE "Comments",           "Dental plan!  Lisa needs braces."
+            VALUE "CompanyName",        "Aaron Curtis"
+            VALUE "FileDescription",    "QClip - queue based clipboard extender"
+            VALUE "FileVersion",        "0.9.3.1"
+            VALUE "InternalName",       "QClip"
+            VALUE "LegalCopyright",     "2006 Aaron Curtis"
+            VALUE "OriginalFilename",   "QClip.exe"
+            VALUE "ProductName",        "QClip"
+            VALUE "ProductVersion",     "0.9.3.1"
+        END
+    END
+END
+
+

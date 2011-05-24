@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="content-language" content="en" />
+<title>QClip Documentation</title>
+<style type="text/css">
+a           {color:             #000000;}
+a:visited   {color:             #303030;}
+a:hover     {color:             #606060;}
+a:active    {color:             #808080;}
+
+p.first     {margin-top:        0px;}
+p.last      {margin-bottom:     0px;}
+p.single    {margin-top:        0px;
+            margin-bottom:      0px;}
+
+#outer      {max-width:         40em;
+            font-family:        "Trebuchet MS", arial, sans-serif;
+            font-size:          14px;
+            margin:             auto;}
+
+.title1     {text-align:        center;
+            text-transform:     uppercase;
+            letter-spacing:     4px;
+            font-weight:        bold;
+            font-size:          150%;
+            background-color:   #f0f0f0;
+            border:             2px #000000 solid;
+            padding:            4px;
+            width:              60%;
+            margin:             auto;}
+
+.title2     {text-transform:    uppercase;
+            letter-spacing:     4px;
+            font-weight:        bold;
+            font-size:          100%;
+            position:           relative;
+            top:                18px;
+            left:               2em;
+            width:              12em;
+            padding-top:        4px;
+            padding-bottom:     4px;
+            padding-right:      8px;
+            padding-left:       8px;
+            border:             2px #000000 solid;
+            background-color:   #f0f0f0;}
+
+.title3     {font-weight:       bold;
+            font-size:          100%;
+            letter-spacing:     3px;}
+
+.content    {border:            2px #000000 solid;
+            background-color:   #e8e8e8;
+            padding-top:        22px;
+            padding-right:      6px;
+            padding-left:       6px;
+            padding-bottom:     6px;
+            line-height:        150%;
+            text-align:         justify;}
+
+kbd         {font-weight:       bold;}
+
+.pref       {font-weight:       bold;
+            letter-spacing:     1px;}
+
+</style>
+</head>
+
+<body>
+<div id="outer">
+<div class="title1">
+QClip
+</div>
+
+<div>
+<div class="title2">
+About
+</div>
+<div class="content">
+<p class="first">
+QClip is a clipboard extender for Windows, similar to that found
+in the Microsoft Office suite, with the exception that it can
+copy and paste data to and from any other program, arbitrarily.
+The program monitors the standard Windows clipboard and copies any
+data it sees there into a queue.  You can then access the data
+later on through hotkeys defined by the program.
+</p>
+<p>
+QClip is designed with a minimalist approach - it has no UI to
+speak of, uses few system resources, and does not impact the
+registry.
+</p>
+<p class="last">
+For the latest version of QClip and other software, visit
+<a href="http://www.cadae.net">cadae.net</a>.
+</p>
+</div>
+</div>
+
+<div>
+<div class="title2">
+License
+</div>
+<div class="content">
+<p class="single">
+QClip is copyright 2006 Aaron Curtis, and is distributed under the
+<a href="http://www.fsf.org/licensing/licenses/gpl.html" target="_blank">GNU General Public License</a>.
+For details, see the file license.txt included in the QClip archive.
+</p>
+</div>
+</div>
+
+<div>
+<div class="title2">
+Installation
+</div>
+<div class="content">
+<p class="first">
+QClip requires no installation; simply place the executable in
+your favorite direcory and run it.  The program will happily run from
+flash drives and the like.  Optionally, if you would like QClip
+to start automatically at Windows startup, you may also place a
+shortcut to the executable in your Startup folder.
+</p>
+<p class="last">
+QClip does not modify the Windows registry; rather it stores all
+configuration data in an .ini file in the same directory as the
+executable (this file is created automatically).  By default, the
+application will also create the file autosave.qcl, which stores
+clipboard data between sessions.
+</p>
+</div>
+</div>
+
+<div>
+<div class="title2">
+Basic Usage
+</div>
+<div class="content">
+<p class="first">
+When launched, QClip will place an icon in the system tray.
+Right-clicking the icon will allow you to exit the program or
+acess the Preferences dialog.  Most interaction however, is done
+through keyboard shortcuts.
+</p>
+<p>
+Whenever you copy data to the Windows clipboard, QClip will add
+it to a queue.  You can then "pop" data from either end of the
+queue by pressing <kbd>Ctrl-Alt-F</kbd> (for
+the most recent item) or <kbd>Ctrl-Alt-B</kbd>
+(for the oldest).  This will remove the data from the queue and
+paste it into whatever application has focus.
+For example:  Highlight some text and press
+<kbd>Ctrl-C</kbd>, then highlight some more
+and press <kbd>Ctrl-C</kbd> again.  Repeat
+this a few times.  Now open Notepad and press
+<kbd>Ctrl-Alt-B</kbd> a few times.
+You will see the various text items appear in the order you
+copied them.  Pressing <kbd>Ctrl-Alt-F</kbd>
+would have pasted the text in reverse order.
+</p>
+<p>
+You can also "peek" at data in the queue using
+<kbd>Ctrl-Alt-Shift-F</kbd>
+and <kbd>Ctrl-Alt-Shift-B</kbd>.  This will
+paste data from either end of the queue without removing it.
+</p>
+<p>
+Another way to access clipboard data is to press
+<kbd>Ctrl-Alt-V</kbd>.  This will create a
+popup menu, showing every item currently in the queue, as well
+as any user-defined "common items".  Selecting an item will
+then paste it.  Note that when using this method, QClip is only
+able to display data in simple formats (text, bitmap); other
+formats will be shown as "Binary Data".
+</p>
+<p>
+Also note that by default, the queue is limited to ten items,
+so anything older than the tenth item is lost.
+</p>
+<p class="last">
+Furthermore, because of the way QClip interacts with the
+Windows clipboard, the standard Windows paste operation
+(<kbd>Ctrl-V</kbd>) will use whatever data
+QClip has most recently accessed, either through a copy or a
+paste.
+</p>
+</div>
+</div>
+
+<div>
+<div class="title2">
+Files
+</div>
+<div class="content">
+<p class="first">
+QClip can save the current queue to a .qcl file, which can
+be loaded into the program at some later time (this ability is
+available by right-clicking the system tray icon).  So, for
+example, you could copy a bunch of items, save the queue, then
+paste them on a different computer.
+</p>
+<p class="last">
+Another use for .qcl files is to save commonly used items.  QClip
+is able to add items from a user-defined file to the popup menu
+(see the General Preferences dialog).  These items exist in a
+separate queue from the main one, and are not affected by copy
+and paste operations.
+</p>
+</div>
+</div>
+
+<div>
+<div class="title2">
+Preferences
+</div>
+<div class="content">
+<div class="title3">
+General
+</div>
+<ul>
+<li>
+<span class="pref">Queue Size</span> - Sets the maximum number
+of items the queue can hold.  Shrinking the queue may cause
+data to be lost, if the maximum size had been reached.
+</li>
+<li>
+<span class="pref">Unlimited queue</span> - If this is checked,
+QClip will dynamically resize the queue as you copy items, and shrink
+it as you remove them.  The size of the queue is then limited only by
+available memory.
+</li>
+<li>
+<span class="pref">Auto-save and restore the queue between
+sessions</span> - If this is checked, on exit, QClip will save
+the queue to the file autosave.qcl.  This file will then be loaded
+the next time the application is started.
+</li>
+<li>
+<span class="pref">Preview bitmaps in the popup menu</span> - If
+this is checked, QClip will attempt to display bitmap data in the
+popup menu.  Otherwise, a general description of each bitmap is given
+(i.e. height, width, bit depth).
+</li>
+<li>
+<p>
+<span class="pref">Common Items</span> - If these options are set,
+QClip will attempt to add commonly used data to the popup menu.
+This can be one of the pre-defined items (the date in long or short
+format), or a user-created .qcl file.
+</p>
+<p>
+<em>Custom date / time formats</em> - One of the common items available
+is a customizable date / time string.  The format codes are the same
+as used in the Regional and Language Options in the Windows control
+panel, which are:
+<ul>
+<li>
+<strong>M</strong>, <strong>MM</strong>, <strong>MMM</strong>, or
+<strong>MMMM</strong> - the month as a one or two digit number,
+three letter abbreviation, or full text.
+</li>
+<li>
+<strong>d</strong>, <strong>dd</strong>, <strong>ddd</strong>, or
+<strong>dddd</strong> - the day, following the same pattern.
+</li>
+<li>
+<strong>y</strong>, <strong>yy</strong>, or <strong>yyyy</strong>
+- the year as a one, two, or four digit number.
+</li>
+<li>
+<strong>h</strong> or <strong>hh</strong> - the hour as a one or
+two digit number, on a 12-hour clock.
+</li>
+<li>
+<strong>H</strong> or <strong>HH</strong> - the hour on a 24-hour clock.
+</li>
+<li>
+<strong>m</strong> or <strong>mm</strong> - minutes.
+</li>
+<li>
+<strong>s</strong> or <strong>ss</strong> - seconds.
+</li>
+<li>
+<strong>t</strong> or <strong>tt</strong> - AM or PM.
+</li>
+</ul>
+Other characters will appear unchanged in the formatted string. "%" is
+an escape character, so for example, %d represents the letter d, not
+the current day.
+</p>
+</li>
+</ul>
+<div class="title3">
+Keys
+</div>
+<p>
+Nearly all actions in QClip are controllable through hotkeys,
+though only a few are defined by default (Pop and Peek, Show
+Popup Menu).  To define a new hotkey, simply select an action
+from the list, click the "Shortcut Key" box, and press a key
+combination.
+</p>
+
+<div class="title3">
+Formats
+</div>
+<p>
+Internally, QClip is format-blind.  The Formats dialog exits
+to allow you to disable certain kinds of data.  This is
+useful because applications often place data on the clipboard
+in several redundant formats, which can consume large amounts
+of memory.
+</p>
+<p class="last">
+The first six checkboxes refer to standard clipboard formats
+defined by Windows.  The last of these, "Other Standard
+Formats", is a catch-all for a number of formats not in
+common use.  "Private Formats" refers to custom-format data
+that is not intended to used outside the application that
+created it.  Alternatively, "Registered Application Formats"
+refers to custom-format data that is meant to be shared
+among applications.  Rich text is probably the most common
+example.
+</p>
+</div>
+</div>
+
+</div>
+</body>
+</html>
