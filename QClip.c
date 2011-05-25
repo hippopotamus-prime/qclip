@@ -44,11 +44,6 @@
 
 #define ERROR_LENGTH    200
 
-//These are missing from MinGW's header files :(
-#define CFSTR_MOUNTEDVOLUME              _T("MountedVolume")
-#define CFSTR_TARGETCLSID                _T("TargetCLSID")
-#define CFSTR_LOGICALPERFORMEDDROPEFFECT _T("Logical Performed DropEffect")
-
 Globals gv;
 
 static BOOL HandleHotKey(WPARAM wParam, LPARAM lParam);
@@ -552,7 +547,7 @@ void ShowPopupMenu()
         HWND foreground_window = GetForegroundWindow();
         POINT point;
         int section1, section2, section3;
-        int command;
+        unsigned int command;
 
         GetCursorPos(&point);
         //GetCaretPos(&point);
@@ -965,9 +960,10 @@ BOOL CreateTrayIcon(HWND hwnd)
     nid.uID                 = TRAY_ID;
     nid.uFlags              = NIF_ICON | NIF_MESSAGE | NIF_TIP;
     nid.uCallbackMessage    = TRAY_MESSAGE;
-    nid.hIcon               = LoadImage(GetModuleHandle(NULL),
+    nid.hIcon               = (HICON) LoadImage(GetModuleHandle(NULL),
                                 MAKEINTRESOURCE(ICON_QCLIP),
-                                IMAGE_ICON, 16, 16, 0);
+                                IMAGE_ICON, 16, 16,
+                                LR_LOADTRANSPARENT | LR_MONOCHROME);
 
     LoadString(GetModuleHandle(NULL),
         STRING_TRAY_TIP, nid.szTip, 63);

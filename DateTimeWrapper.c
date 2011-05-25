@@ -65,8 +65,7 @@ void GetPartialDateTime(TCHAR* format, TCHAR* buffer,
 
         if(full_buffer)
         {
-            _tcsncpy(buffer, full_buffer, buffer_size);
-
+            _tcsncpy_s(buffer, buffer_size, full_buffer, buffer_size);
             HeapFree(GetProcessHeap(), 0, full_buffer);
         }
     }
@@ -165,7 +164,8 @@ size_t FormatDateTime(TCHAR* format, TCHAR* buffer,
                     format_chunk_length = MAX_FORMAT_WORD_SIZE;
                 }
 
-                _tcsncpy(temp_format_buffer, src, format_chunk_length);
+                _tcsncpy_s(temp_format_buffer, MAX_FORMAT_WORD_SIZE + 1,
+                           src, format_chunk_length);
                 temp_format_buffer[format_chunk_length] = _T('\0');
 
                 if(IsDateChar(current))

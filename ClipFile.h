@@ -43,6 +43,6 @@ extern BOOL SaveQueue();
 extern BOOL OpenQueueFromDefault();
 extern BOOL SaveQueueAsDefault();
 
-extern BOOL OpenCommonItems();
+extern BOOL OpenCommonItems(BOOL show_error);
 
 #endif

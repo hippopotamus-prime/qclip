@@ -64,36 +64,37 @@ BEGIN
 	DEFPUSHBUTTON "&OK", IDOK,
                 144, 134, 50, 14
 
-    LTEXT       "QClip v0.9.3.1", IDC_ABOUT_TITLE,
+    LTEXT       "QClip v0.9.4", IDC_ABOUT_TITLE,
                 48, 8, 60, 12,
                 SS_LEFT
 
-    LTEXT       "Queue based clipboard extender.\r\n" \
-                "Copyright © 2006 Aaron Curtis.", (-1),
+    LTEXT       "Queue based clipboard extender.\r\nCopyright © 2006 Aaron Curtis.",
+                (-1),
                 48, 23, 146, 26,
                 SS_LEFT
 
-    LTEXT       "This program is free software; you can redistribute " \
-                "it and/or modify it under the terms of the GNU General " \
-                "Public License as published by the Free Software " \
-                "Foundation; either version 2 of the License, or (at " \
-                "your option) any later version.", (-1),
+    LTEXT       "This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.",
+                (-1),
                 48, 48, 146, 50,
                 SS_LEFT
 
-    LTEXT       "email:", (-1),
+    LTEXT       "email:",
+                (-1),
                 48, 104, 30, 12,
                 SS_LEFT
 
-    LTEXT       "aaron@cadae.net", IDC_ABOUT_EMAIL,
+    LTEXT       "aaron@cadae.net",
+                IDC_ABOUT_EMAIL,
                 80, 104, 60, 12,
                 SS_LEFT | SS_NOTIFY
 
-    LTEXT       "web:", (-1),
+    LTEXT       "web:",
+                (-1),
                 48, 118, 30, 12,
                 SS_LEFT
 
-    LTEXT       "www.cadae.net", IDC_ABOUT_WEB,
+    LTEXT       "www.cadae.net",
+                IDC_ABOUT_WEB,
                 80, 118, 60, 12,
                 SS_LEFT | SS_NOTIFY
 END
@@ -244,7 +245,7 @@ BEGIN
     STRING_INDEX_CHARS          "123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     STRING_BITMAP_POPUP         "[Bitmap - %dx%dx%d]"
     STRING_FILE_POPUP           "[Files (%d)]"
-    STRING_TRAY_TIP             "QClip v0.9.3.1"
+    STRING_TRAY_TIP             "QClip v0.9.4"
 	STRING_TYPE_FILTER			"QClip Clipboards (.qcl);*.qcl;"
     STRING_README               "http://www.cadae.net/qclip-docs.html"
     STRING_EMAIL                "mailto:aaron@cadae.net"
@@ -294,12 +295,12 @@ BEGIN
             VALUE "Comments",           "Dental plan!  Lisa needs braces."
             VALUE "CompanyName",        "Aaron Curtis"
             VALUE "FileDescription",    "QClip - queue based clipboard extender"
-            VALUE "FileVersion",        "0.9.3.1"
+            VALUE "FileVersion",        "0.9.4.0"
             VALUE "InternalName",       "QClip"
             VALUE "LegalCopyright",     "2006 Aaron Curtis"
             VALUE "OriginalFilename",   "QClip.exe"
             VALUE "ProductName",        "QClip"
-            VALUE "ProductVersion",     "0.9.3.1"
+            VALUE "ProductVersion",     "0.9.4.0"
         END
     END
 END
