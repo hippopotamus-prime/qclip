@@ -2,25 +2,20 @@
 ** QClip
 ** Copyright 2006 Aaron Curtis
 **
-** QClip is a clipboard extender for Windows.  It monitors the standard
-** Windows clipboard and pushes any data placed there into a queue.
-** Users can then pop data from either end of the queue when needed  or
-** select items arbitrarily from a menu.  In either case, the program
-** performs a "paste" operation automatically.
+** This file is part of QClip.
 **
-** This program is free software; you can redistribute it and/or modify
+** QClip is free software: you can redistribute it and/or modify
 ** it under the terms of the GNU General Public License as published by
-** the Free Software Foundation; either version 2 of the License, or
+** the Free Software Foundation, either version 3 of the License, or
 ** (at your option) any later version.
 **
-** This program is distributed in the hope that it will be useful,
+** QClip is distributed in the hope that it will be useful,
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ** GNU General Public License for more details.
 **
 ** You should have received a copy of the GNU General Public License
-** along with this file; if not, write to the Free Software
-** Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+** along with QClip. If not, see <https://www.gnu.org/licenses/>.
 ****************************************************************************/
 
 #ifndef __KEYSETTINGS__
