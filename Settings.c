@@ -109,7 +109,7 @@ static const TCHAR* profile_key_strings[NUM_KEY_COMMANDS] = {
     _T("Custom2Key"),
     _T("Custom3Key"),
     _T("Custom4Key"),
-    _T("Custom5Key"),};
+    _T("Custom5Key")};
 
 static const TCHAR* profile_format_strings[NUM_FORMAT_TYPES] = {
     _T("EnableText"),
@@ -298,7 +298,7 @@ void LoadSettingsFromDisk()
     {
         for(i = gv.settings.recent_files - 1; i >= 0; --i)
         {
-            _sntprintf(profile_key, MAX_PROFILE_LENGTH-3,
+            _stprintf_s(profile_key, MAX_PROFILE_LENGTH - 3,
                 PROFILE_RECENT_BASE, i);
 
             if(GetPrivateProfileString(PROFILE_SECTION_GENERAL,
@@ -371,7 +371,7 @@ void LoadSettingsFromDisk()
     //============
     for(i = 0; i < NUM_KEY_COMMANDS; ++i)
     {
-        _sntprintf(profile_key, MAX_PROFILE_LENGTH-4, _T("%s"),
+        _tcscpy_s(profile_key, MAX_PROFILE_LENGTH - 4,
             profile_key_strings[i]);
 
         if(default_keys[i])
@@ -431,7 +431,7 @@ int value, const TCHAR* profile_path)
 {
     TCHAR profile_val[MAX_PROFILE_LENGTH+1];
 
-    _sntprintf(profile_val, MAX_PROFILE_LENGTH, _T("%d"), value);
+    _stprintf_s(profile_val, MAX_PROFILE_LENGTH, _T("%d"), value);
 
     return WritePrivateProfileString(section_name, key_name,
         profile_val, profile_path);
@@ -504,7 +504,7 @@ void SaveSettingsToDisk()
     {
         for(i = 0; i < gv.recent_count; ++i)
         {
-            _sntprintf(profile_key, MAX_PROFILE_LENGTH-3,
+            _stprintf_s(profile_key, MAX_PROFILE_LENGTH-3,
                 PROFILE_RECENT_BASE, i);
     
             recent_value = GetRecentFileName(i);
