@@ -40,7 +40,7 @@ BEGIN
         MENUITEM "Enable Clipboard &Monitoring", IDM_ENABLE
         MENUITEM SEPARATOR
         MENUITEM "&Preferences...", IDM_SETTINGS
-        MENUITEM "Online &Help...", IDM_HELP
+        MENUITEM "&Help...",        IDM_HELP
         MENUITEM "A&bout...",       IDM_ABOUT
         MENUITEM SEPARATOR
         MENUITEM "&Exit",           IDM_EXIT
@@ -242,7 +242,7 @@ BEGIN
     STRING_FILE_POPUP           "[Files (%d)]"
     STRING_TRAY_TIP             "QClip v0.9.4"
 	STRING_TYPE_FILTER			"QClip Clipboards (.qcl);*.qcl;"
-    STRING_README               "http://www.cadae.net/qclip-docs.html"
+    STRING_README               "qclip-docs.html"
     STRING_EMAIL                "mailto:aaron@cadae.net"
     STRING_WEB                  "http://www.cadae.net/"
 

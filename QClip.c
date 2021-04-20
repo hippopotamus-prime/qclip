@@ -124,9 +124,6 @@ QClipHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                     case IDM_HELP:
                     {
-                        //Decided to go with online help instead of local files.
-                        //The code is very similar...
-                        /*
                         TCHAR readme_file[MAX_PATH];
                         TCHAR readme_path[MAX_PATH];
 
@@ -135,13 +132,17 @@ QClipHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                         GetFileInInstallPath(readme_file, readme_path);
                         ShellExecute(NULL, _T("open"), readme_path,
                             NULL, readme_path, SW_SHOW);
-                        */
 
+                        // Code to open the help at a web address. Disabled
+                        // because hosting stuff at a web address is work.
+                        /*
                         TCHAR readme_url[MAX_PATH];
                         LoadString(GetModuleHandle(NULL), STRING_README,
                             readme_url, MAX_PATH);
                         ShellExecute(NULL, _T("open"), readme_url,
                             NULL, readme_url, SW_SHOW);
+                        */
+
                         break;
                     }
 
