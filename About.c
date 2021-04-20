@@ -91,20 +91,22 @@ AboutHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                 OUT_DEFAULT_PRECIS, DEFAULT_QUALITY,
                 DEFAULT_PITCH | FF_SWISS, _T("Ms Sans Serif"));
 
+            /*
             HWND email_window = GetDlgItem(hwnd, IDC_ABOUT_EMAIL);
-            HWND web_window = GetDlgItem(hwnd, IDC_ABOUT_WEB);
-
             WNDPROC default_email_handler = (WNDPROC) SetWindowLongPtr(
                 email_window, GWLP_WNDPROC, (LONG_PTR) LinkHandler);
+            SetWindowLongPtr(email_window, GWLP_USERDATA,
+                (LONG_PTR) default_email_handler);
+            SendMessage(email_window, WM_SETFONT, (WPARAM) font, 0);
+            */
+
+            HWND web_window = GetDlgItem(hwnd, IDC_ABOUT_WEB);
             WNDPROC default_web_handler = (WNDPROC) SetWindowLongPtr(
                 web_window, GWLP_WNDPROC, (LONG_PTR) LinkHandler);
 
-            SetWindowLongPtr(email_window, GWLP_USERDATA,
-                (LONG_PTR) default_email_handler);
             SetWindowLongPtr(web_window, GWLP_USERDATA,
                 (LONG_PTR) default_web_handler);
 
-            SendMessage(email_window, WM_SETFONT, (WPARAM) font, 0);
             SendMessage(web_window, WM_SETFONT, (WPARAM) font, 0);
             break;
         }
@@ -118,10 +120,12 @@ AboutHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                     switch(LOWORD(wParam))
                     {
+                        /*
                         case IDC_ABOUT_EMAIL:
                             LoadString(GetModuleHandle(NULL),
                                 STRING_EMAIL, url, MAX_PATH);
                             break;
+                        */
                         case IDC_ABOUT_WEB:
                             LoadString(GetModuleHandle(NULL),
                                 STRING_WEB, url, MAX_PATH);
@@ -145,16 +149,19 @@ AboutHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     HFONT font = (HFONT) SendDlgItemMessage(hwnd,
                         IDC_ABOUT_EMAIL, WM_GETFONT, 0, 0);
 
+                    /*
                     HWND email_window = GetDlgItem(hwnd, IDC_ABOUT_EMAIL);
-                    HWND web_window = GetDlgItem(hwnd, IDC_ABOUT_WEB);
-
                     WNDPROC default_email_handler = (WNDPROC) GetWindowLongPtr(
                         email_window, GWLP_USERDATA);
+                    SetWindowLongPtr(email_window, GWLP_WNDPROC,
+                        (LONG_PTR) default_email_handler);
+                    */
+
+                    HWND web_window = GetDlgItem(hwnd, IDC_ABOUT_WEB);
+
                     WNDPROC default_web_handler = (WNDPROC) GetWindowLongPtr(
                         web_window, GWLP_USERDATA);
 
-                    SetWindowLongPtr(email_window, GWLP_WNDPROC,
-                        (LONG_PTR) default_email_handler);
                     SetWindowLongPtr(web_window, GWLP_WNDPROC,
                         (LONG_PTR) default_web_handler);
 

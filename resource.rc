@@ -48,7 +48,7 @@ BEGIN
 END
 
 
-DIALOG_ABOUT DIALOG 0, 0, 200, 154
+DIALOG_ABOUT DIALOG 0, 0, 200, 140
 STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "About QClip"
 FONT 8, "Ms Sans Serif"
@@ -57,7 +57,7 @@ BEGIN
                 11,6,20,20
 
 	DEFPUSHBUTTON "&OK", IDOK,
-                144, 134, 50, 14
+                144, 120, 50, 14
 
     LTEXT       "QClip v0.9.4", IDC_ABOUT_TITLE,
                 48, 8, 60, 12,
@@ -73,24 +73,9 @@ BEGIN
                 48, 48, 146, 50,
                 SS_LEFT
 
-    LTEXT       "email:",
-                (-1),
-                48, 104, 30, 12,
-                SS_LEFT
-
-    LTEXT       "aaron@cadae.net",
-                IDC_ABOUT_EMAIL,
-                80, 104, 60, 12,
-                SS_LEFT | SS_NOTIFY
-
-    LTEXT       "web:",
-                (-1),
-                48, 118, 30, 12,
-                SS_LEFT
-
-    LTEXT       "www.cadae.net",
+    LTEXT       "QClip on GitHub",
                 IDC_ABOUT_WEB,
-                80, 118, 60, 12,
+                48, 104, 60, 12,
                 SS_LEFT | SS_NOTIFY
 END
 
@@ -243,8 +228,7 @@ BEGIN
     STRING_TRAY_TIP             "QClip v0.9.4"
 	STRING_TYPE_FILTER			"QClip Clipboards (.qcl);*.qcl;"
     STRING_README               "qclip-docs.html"
-    STRING_EMAIL                "mailto:aaron@cadae.net"
-    STRING_WEB                  "http://www.cadae.net/"
+    STRING_WEB                  "https://github.com/hippopotamus-prime/qclip"
 
     STRING_POPUP                "Show Popup Menu"
     STRING_POP_FRONT            "Pop Newest"
