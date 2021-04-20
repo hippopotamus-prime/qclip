@@ -366,6 +366,7 @@ KeySettingsHandler(HWND dlg_window, UINT message, WPARAM wParam, LPARAM lParam)
                     {
                         SendDlgItemMessage(dlg_window,
                             IDC_HOTKEY, HKM_SETHOTKEY, 0, 0);
+                        HandleHotKeyChange(dlg_window);
                     }
                     break;
             }
