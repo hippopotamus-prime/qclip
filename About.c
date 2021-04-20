@@ -116,7 +116,8 @@ AboutHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
             {
                 case STN_CLICKED:
                 {
-                    TCHAR url[MAX_PATH] = _T("");
+                    TCHAR url[MAX_PATH];
+                    memset(url, 0, sizeof(url));
 
                     switch(LOWORD(wParam))
                     {
@@ -132,7 +133,7 @@ AboutHandler(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                             break;
                     }
 
-                    if(_tcslen(url) > 0)
+                    if(url[0] != _T('\0'))
                     {
                         ShellExecute(NULL, _T("open"), url,
                             NULL, _T(""), SW_SHOW);
