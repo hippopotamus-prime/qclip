@@ -72,7 +72,7 @@ BOOL AddClipItemToMenu(ClipItem* item, HMENU menu, int item_id, TCHAR* prefix)
 
         if(prefix)
         {
-            _sntprintf(text, 3, _T("&%c "), *prefix);
+            _stprintf_s(text, 3, _T("&%c "), *prefix);
             text_start += 3;
         }
 
@@ -100,7 +100,7 @@ BOOL AddClipItemToMenu(ClipItem* item, HMENU menu, int item_id, TCHAR* prefix)
         {
             case CF_UNICODETEXT:
                 #ifdef UNICODE
-                _tcsncpy(text_start, item->data[i].memory, POPUP_TEXT_LENGTH);
+                _tcscpy_s(text_start, POPUP_TEXT_LENGTH, item->data[i].memory);
                 #else
                 WideCharToMultiByte(CP_ACP, 0, item->data[i].memory,
                     -1, text_start, POPUP_TEXT_LENGTH, NULL, NULL);
@@ -115,7 +115,7 @@ BOOL AddClipItemToMenu(ClipItem* item, HMENU menu, int item_id, TCHAR* prefix)
                 MultiByteToWideChar(CP_ACP, 0, item->data[i].memory,
                     -1, text_start, POPUP_TEXT_LENGTH, NULL, NULL);
                 #else
-                _tcsncpy(text_start, item->data[i].memory, POPUP_TEXT_LENGTH);
+                _tcscpy_s(text_start, POPUP_TEXT_LENGTH, item->data[i].memory);
                 #endif
 
                 mii.dwTypeData      = text;
@@ -156,7 +156,7 @@ BOOL AddClipItemToMenu(ClipItem* item, HMENU menu, int item_id, TCHAR* prefix)
                     }
                 }
 
-                _sntprintf(text_start, POPUP_TEXT_LENGTH,
+                _stprintf_s(text_start, POPUP_TEXT_LENGTH,
                     file_text, count);
 
                 mii.dwTypeData      = text;
@@ -188,7 +188,7 @@ BOOL AddClipItemToMenu(ClipItem* item, HMENU menu, int item_id, TCHAR* prefix)
                         bmp_text,
                         POPUP_TEXT_LENGTH);
 
-                    _sntprintf(text_start, POPUP_TEXT_LENGTH,
+                    _stprintf_s(text_start, POPUP_TEXT_LENGTH,
                         bmp_text,
                         header->biWidth,
                         header->biHeight,
