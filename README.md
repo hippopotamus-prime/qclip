@@ -1,5 +1,5 @@
 # QClip
-> Queue-based clipboard extender for Windows
+> Portable queue-based clipboard extender for Windows
 
 ## About
 QClip is a clipboard extender for Windows that monitors the standard Windows
@@ -12,13 +12,16 @@ QClip is designed with a minimalist approach - it has no UI to speak of,
 uses few system resources, and does not impact the registry.
 
 ## Free Software
-Interlopers is free software as described by the GNU General Public
-License (v3). See LICENSE.md for details.
+QClip is free software as described by the GNU General Public License (v3).
+See LICENSE.md for details.
 
 ## Installation
-QClip requires no installation; simply place the executable in your favorite
-directory and run it. The program will happily run from flash drives and the
-like.
+QClip is designed for portable use and requires no installation. Simply place
+the executable in your favorite directory and run it. The program will happily
+run from flash drives and the like.
+
+Note that QClip will write an .ini in the same directory as the executable,
+so it should be placed in a user-owned directory.
 
 ## Basic Usage
 When launched, QClip will place an icon in the system tray. Right-clicking
