@@ -1,5 +1,15 @@
 # QClip Changelog
 
+## 0.9.4 - 2021-04-20
+### New Features
+* Project uploaded to GitHub. References to the defunct cadae.net have
+been removed.
+* Updated the license to GPL v3.
+* QClip now compiles with Visual Studio 2019.
+* Updated popup menu bitmap rendering for Windows 10.
+### Fixes
+* Cleared hotkeys are now saved properly.
+
 ## 0.9.3.1 - 2008-05-30
 ### Fixes
 * The default queue is now saved during Windows shutdown.
