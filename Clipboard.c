@@ -78,7 +78,7 @@ BOOL AddClipItemToMenu(ClipItem* item, HMENU menu, int item_id, TCHAR* prefix)
 
         ZeroMemory(&mii, sizeof(MENUITEMINFO));
         mii.cbSize  = sizeof(MENUITEMINFO);
-        mii.fMask   = MIIM_TYPE | MIIM_STATE | MIIM_ID;
+        mii.fMask   = MIIM_FTYPE | MIIM_STRING | MIIM_STATE | MIIM_ID;
         mii.fState  = MFS_ENABLED;
         mii.wID     = item_id;
         mii.fType   = MFT_STRING;
@@ -168,35 +168,43 @@ BOOL AddClipItemToMenu(ClipItem* item, HMENU menu, int item_id, TCHAR* prefix)
             case CF_DIB:
                 if(gv.settings.preview_bitmaps)
                 {
-                    //Win98 and onward add another member, hbmpItem,
-                    //allowing for text and bitmap data at the same
-                    //time.  Sounds nice... but it doens't work -
-                    //the menu width isn't always calculated right.
-                    //Windows is stupid.
+                    // The Windows API documentation claims that using
+                    // MFT_BITMAP and dwTypeData is equivalent to hbmpItem,
+                    // but they're rendered differently. MFT_BITMAP is inline
+                    // with text items while hbmpItem is a separate column on
+                    // the left. In Win98/XP MFT_BITMAP looked better, but
+                    // Win10 stretches it match the menu width, which looks
+                    // really bad.
+
+                    /*
+                    mii.fMask = MIIM_TYPE | MIIM_STATE | MIIM_ID;
                     mii.fType       = MFT_BITMAP;
                     mii.dwTypeData  = (TCHAR*)
                         CreateBitmapFromClipboard(item->data[i].memory);
+                    */
+                    
+                    mii.fMask |= MIIM_BITMAP;
+                    mii.hbmpItem =
+                        CreateBitmapFromClipboard(item->data[i].memory);
                 }
-                else
-                {
-                    BITMAPINFOHEADER* header = (BITMAPINFOHEADER*)
-                        item->data[i].memory;
-                    TCHAR bmp_text[POPUP_TEXT_LENGTH + 1];
 
-                    LoadString(GetModuleHandle(NULL),
-                        STRING_BITMAP_POPUP,
-                        bmp_text,
-                        POPUP_TEXT_LENGTH);
+                BITMAPINFOHEADER* header = (BITMAPINFOHEADER*)
+                    item->data[i].memory;
+                TCHAR bmp_text[POPUP_TEXT_LENGTH + 1];
 
-                    _stprintf_s(text_start, POPUP_TEXT_LENGTH,
-                        bmp_text,
-                        header->biWidth,
-                        header->biHeight,
-                        header->biBitCount);
+                LoadString(GetModuleHandle(NULL),
+                    STRING_BITMAP_POPUP,
+                    bmp_text,
+                    POPUP_TEXT_LENGTH);
 
-                    mii.dwTypeData      = text;
-                    mii.cch             = (UINT) _tcslen(text);
-                }
+                _stprintf_s(text_start, POPUP_TEXT_LENGTH,
+                    bmp_text,
+                    header->biWidth,
+                    header->biHeight,
+                    header->biBitCount);
+
+                mii.dwTypeData      = text;
+                mii.cch             = (UINT) _tcslen(text);
                 break;
 
             default:
