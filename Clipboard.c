@@ -72,7 +72,7 @@ BOOL AddClipItemToMenu(ClipItem* item, HMENU menu, int item_id, TCHAR* prefix)
 
         if(prefix)
         {
-            _stprintf_s(text, 3, _T("&%c "), *prefix);
+            _stprintf_s(text, 4, _T("&%c "), *prefix);
             text_start += 3;
         }
 
